@@ -1,0 +1,127 @@
+<html ng-app='sample'>
+<head>
+<style type="text/css">
+body{
+	background-color: #000000;
+}
+.container{
+	position: relative;
+	top: 0px;
+	left: 0px;
+	
+}
+.icont{
+	
+	width: 600px;
+	height: 400px;
+	position: relative;
+	
+
+}
+.ipoint{
+	transition-property: top,left;
+	transition-duration: 2s;
+	position: absolute;
+	width: 100px;
+	height: 100px;
+	z-index: 0;
+
+}
+.iphoto{
+	transition-property:width,height;
+	transition-duration: 2s;
+	width: 150px;
+	height: 100px;
+}
+.iphoto:hover{
+	width: 300;
+	height: 200px;
+}
+
+</style>
+</head>
+<body>
+<div ng-controller='emp' class="container">
+name ::<p >{{abc}}</p>
+<br>
+<input type="text" ng-model='abc' >
+<input type="text" ng-model='abc' >
+<br>
+<p ng-click='getname()'>get value</p>
+<br>
+<br>
+<div class="icont" style="top: 200px; left: 5px;">
+	<div  class='ipoint ipoint-{{item.id}}' ng-repeat='item in items' 
+	
+	>
+		<img src='img/{{item.imgurl}}' class='iphoto'/>
+		<style type="text/css">
+			.ipoint-{{item.id}}{
+				top: {{item.top}}px; 
+				left: {{item.left}}px;
+			}
+		
+			.ipoint-{{item.id}}:hover{
+				z-index: 2;
+				
+				top: {{item.mtop}}px; 
+				left: {{item.mleft}}px;
+				width: 200;
+				height: 200px;
+			}
+			
+		</style>
+	</div>
+</div>
+</div>
+
+
+	
+</body>
+ <script type="text/javascript" src="angular.min.js"></script>
+<script type="text/javascript">
+
+var sample = angular.module('sample',[]);
+
+sample.controller('emp',['$scope',function ($scope) {
+$scope.abc = 'dinuka';
+$scope.items=[];
+var contwidth=600;
+var contHeight=300;
+var count=20;
+for (var i = 0; i<20; i++) {
+	var item={
+		id:i,
+		top:'',
+		left:'',
+		bgcolor:'red',
+		mtop:'',
+		mleft:'',
+		imgurl:i+'.jpg'
+	}
+	item.top = Math.floor(Math.random() * contHeight) + 1;
+	item.left = Math.floor(Math.random() * contwidth) + 1;
+	var  b1 = Math.random() >= 0.5;
+	var  b2 = Math.random() >= 0.5;
+
+	if(b1){
+		item.mtop = item.top+Math.floor(Math.random() * 25) + 1 ;
+	}else{
+		item.mtop = item.top-Math.floor(Math.random() * 25) + 1 ;
+	}
+	if(b2){
+		item.mleft = item.left+Math.floor(Math.random() * 25) + 1 ;
+	}else{
+		item.mleft = item.left-Math.floor(Math.random() * 25) + 1 ;
+	}
+	
+	
+	$scope.items.push(item);
+}
+$scope.getname = function(){
+	console.log('abc:'+$scope.abc);
+}
+}]);
+
+</script>
+</html>
